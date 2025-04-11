@@ -2,45 +2,56 @@
 > Um nome provisório que resuma bem a ideia. Seja criativo, mas claro!
 
 ## 👨‍🎓 Integrantes
-- Nome do Estudante 1
-- Nome do Estudante 2
-- ...
+- Eduardo Nogueira Alves
+- Gislany Dias Formiga
+- Igor Kádson de Souza Oliveira
+- João Pedro de Lima e Silva
 
 ## 💡 Ideia Principal
-Descreva em poucas linhas o que o projeto propõe fazer. 
-Pense como se estivesse explicando para alguém fora da área de tecnologia.
+Desenvolver agentes de inteligência artificial que faça deployment de aplicações em nuvem a partir do fornecimento dos seus respectivos códigos
 
 ## 🎯 Objetivos
-- Liste de forma clara o que o sistema pretende resolver ou melhorar.
-- Pode usar bullets ou parágrafos curtos.
+- Identificar e instalar dependências do projeto;
+- Containerizar aplicações;
+- Realizar deployment das aplicações containerizadas;
+- Disponibilizar o endpoint de acesso (inicialmente, um endereço de IP).
 
 ## 👥 Público-Alvo
-Quem se beneficia com esse projeto? Um setor específico? Um tipo de usuário?
+Desenvolvedores de software ou pessoas que não tem skill de DevOps/SRE para realizar deployment de aplicações em ambientes de nuvem.
 
 ## 🤖 Agentes Envolvidos
-Liste os agentes que existirão no sistema e suas funções.
 Exemplo:
-- Agente A: coleta dados
-- Agente B: toma decisões
-- Agente C: executa ações no ambiente
+- Agente A - Collect: coleta dados
+- Agente B - Checker: Verifica dependências e escreve prompts para uma llm gerar os passos de deploy
+- 
+- Agente C - Applier: Checa se o código de deploy está funcionando 
 
 ## 🧱 Tecnologias Pretendidas
-- Linguagem de programação
-- Bibliotecas e frameworks
-- Ferramentas para teste, simulação, visualização, etc.
+- Python
+- Possivelmente, terraform e ansible
 
 > Justifique, sempre que possível, **por que escolheu cada ferramenta**.
+> Python: Linguagem pretendida em virtude da facilidade de lidar com libs de langchain.
+> Terraform: Ferramenta de automação que possui ampla comunidade de desenvolvimento e fornece meios de deployment de máquinas virtuais em diferentes cloud-providers (aws, gcp, openstack, etc.)
+> Ansible: Ferramenta de automação que possui ampla comunidade de desenvolvimento e fornece meios de deployment de aplicações (python, node, react, java, cpp, etc.);
 
 ## 📦 Entradas e Saídas Esperadas
 **Entradas:**
 - Quais dados o sistema recebe?
+- Um prompt contendo:
+    - O código a ser buildado;
+    - Um chave de api para conexão com o cloud-provider;
 
 **Saídas:**
 - Quais ações ou informações ele gera?
+- O agente deve ser capaz de implantar a solução do cliente em um ambiente virtualizado, e retornar para ele o endpoint de acesso a aplicação.
 
 ## 🔁 Interação entre os Agentes
-Descreva como os agentes vão se comunicar ou se coordenar.
-Pode ser uma descrição textual ou um fluxograma em breve.
+Collect -> Recebe prompts do cliente e filtra a requisição. Por exemplo, na sentença "considerando o código em anexo, faça deployment da aplicacao pra mim na aws considerando a chave da api xpto"
+`collect` irá enviar o código para Checker.
+Checker -> Ao receber o código, `checker` irá verificar as dependências e separar em arquivos json para facilitar a instalação durante o processo de deploy; Além disso, checker inicará uma conversa com outra llm (chatgpt, llama, deepseek, etc.) para receber orientações de deployment. A cada interação, envia o código recebido para `Applier` e aguarda um feedback dele.
+Applier -> Aplica as instruções recebidas de `checker` e retorna um feedback (positivo ou negativo) para ele. Se o feedback for positivo, `checker` dá continuidade com a conversa com a outra llm
+para receber novas instruções. Se for negativo, `checker` informa o problema e busca soluçÕes para retornar para `applier`.
 
 ## 🗂️ Organização e Planejamento do Projeto
 O progresso deste projeto será monitorado através do **GitHub Projects**.
