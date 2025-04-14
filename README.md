@@ -23,50 +23,50 @@ Desenvolvedores de software ou pessoas que não tem skill de DevOps/SRE para rea
 Exemplo:
 - Agente A - Collect: coleta dados
 - Agente B - Checker: Verifica dependências e escreve prompts para uma llm gerar os passos de deploy
-- 
 - Agente C - Applier: Checa se o código de deploy está funcionando 
 
 ## 🧱 Tecnologias Pretendidas
-- Python
-- Possivelmente, terraform e ansible
 
-> Justifique, sempre que possível, **por que escolheu cada ferramenta**.
-> Python: Linguagem pretendida em virtude da facilidade de lidar com libs de langchain.
-> Terraform: Ferramenta de automação que possui ampla comunidade de desenvolvimento e fornece meios de deployment de máquinas virtuais em diferentes cloud-providers (aws, gcp, openstack, etc.)
-> Ansible: Ferramenta de automação que possui ampla comunidade de desenvolvimento e fornece meios de deployment de aplicações (python, node, react, java, cpp, etc.);
+- Python
+- Terraform
+- Ansible
+
+```
+Escolhemos usar Python pela facilidade da equipe em usar a linguagem e pela ampla grade de frameworks que podem ajudar a resolver o nosso problema, como por exemplo, Langchain.
+Terraform e Ansible são tecnologias de automação que são úteis para implantação e configuração de máquinas virtuais em diferentes cloud providers (AWS, GCP, OpenStack, etc).
+```
 
 ## 📦 Entradas e Saídas Esperadas
 **Entradas:**
-- Quais dados o sistema recebe?
 - Um prompt contendo:
     - O código a ser buildado;
     - Um chave de api para conexão com o cloud-provider;
 
 **Saídas:**
-- Quais ações ou informações ele gera?
-- O agente deve ser capaz de implantar a solução do cliente em um ambiente virtualizado, e retornar para ele o endpoint de acesso a aplicação.
+- O agente deve ser capaz de implantar a solução do cliente em um ambiente virtualizado, e retornar para ele as informações necessárias para acessar os componentes.
 
 ## 🔁 Interação entre os Agentes
-Collect -> Recebe prompts do cliente e filtra a requisição. Por exemplo, na sentença "considerando o código em anexo, faça deployment da aplicacao pra mim na aws considerando a chave da api xpto"
-`collect` irá enviar o código para Checker.
-Checker -> Ao receber o código, `checker` irá verificar as dependências e separar em arquivos json para facilitar a instalação durante o processo de deploy; Além disso, checker inicará uma conversa com outra llm (chatgpt, llama, deepseek, etc.) para receber orientações de deployment. A cada interação, envia o código recebido para `Applier` e aguarda um feedback dele.
-Applier -> Aplica as instruções recebidas de `checker` e retorna um feedback (positivo ou negativo) para ele. Se o feedback for positivo, `checker` dá continuidade com a conversa com a outra llm
-para receber novas instruções. Se for negativo, `checker` informa o problema e busca soluçÕes para retornar para `applier`.
+
+<ul>
+<li> Collect: </li>
+<ul><li>Recebe prompts do cliente e filtra a requisição. Por exemplo, na sentença "considerando o código em anexo, faça deployment da aplicacao pra mim na aws considerando a chave da api xpto `collect` irá enviar o código para Checker.</li></ul>
+<li>Checker:</li>
+<ul><li>Ao receber o código, `checker` irá verificar as dependências e separar em arquivos json para facilitar a instalação durante o processo de deploy; Além disso, checker inicará uma conversa com outra llm (chatgpt, llama, deepseek, etc.) para receber orientações de deployment. A cada interação, envia o código recebido para `Applier` e aguarda um feedback dele.</li></ul>
+<li>Applier:</li> 
+<ul><li>Aplica as instruções recebidas de `checker` e retorna um feedback (positivo ou negativo) para ele. Se o feedback for positivo, `checker` dá continuidade com a conversa com a outra llm
+para receber novas instruções. Se for negativo, `checker` informa o problema e busca soluçÕes para retornar para `applier`.</li></ul>
 
 ## 🗂️ Organização e Planejamento do Projeto
-O progresso deste projeto será monitorado através do **GitHub Projects**.
 
 > Acesse a aba "Projects" do repositório para acompanhar:
 - Tarefas pendentes
 - Tarefas em andamento
 - Tarefas concluídas
 
-Cada integrante deve ser responsável por pelo menos uma tarefa no quadro.
-Use etiquetas (labels) e comentários para detalhar o andamento e as decisões.
 
 ## 📌 Status Inicial do Projeto
-- [ ] Ideia discutida e validada com o professor
-- [ ] Estrutura básica do repositório criada
+- [x] Ideia discutida e validada com o professor
+- [x] Estrutura básica do repositório criada
 - [ ] Quadro no GitHub Projects criado
 - [ ] Primeiras tarefas definidas e atribuídas
 
@@ -76,12 +76,3 @@ Este repositório poderá incluir:
 - Relatórios parciais de progresso
 - Scripts de testes ou simulações
 - Resultados e conclusões finais
-
-## 👨‍🏫 Acompanhamento pelo Professor
-Para que o professor possa acompanhar e orientar o andamento do projeto, **adicione o usuário `igorbarcosta` como colaborador do repositório.**
-
-### Como fazer:
-1. Vá até a aba **"Settings"** do seu repositório.
-2. Clique em **"Collaborators"** no menu lateral.
-3. Digite o nome de usuário: `igorbarcosta`
-4. Clique em **"Add collaborator"** e confirme.
